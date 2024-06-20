@@ -1,0 +1,324 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Simult message",
+    "description": "Este projeto visa fornecer uma estrutura de backend para um sistema de mensagens. O backend será responsável por gerenciar o cadastro de usuários, envio, edição e exclusão de mensagens. A seguir estão as etapas e funcionalidades principais."
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "description": "Welcome API",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/users": {
+      "post": {
+        "description": "Registrar novo usuário",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "username",
+                "password",
+                "email"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "Usuário registrado com sucesso"
+          }
+        }
+      }
+    },
+    "/api/users/token": {
+      "post": {
+        "description": "Buscar dados do usuário",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "Dados do usuário retornados"
+          }
+        }
+      }
+    },
+    "/api/users/valid": {
+      "put": {
+        "description": "Validar email do usuário",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "mailer": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "mailer"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sua conta foi aceita com sucesso!",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "msg": {
+                  "type": "string"
+                },
+                "details": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "username": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "accept": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Não foi possível verificar este token ou Código inválido",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "msg": {
+                  "type": "string"
+                },
+                "details": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "username": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "accept": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/chat": {
+      "post": {
+        "description": "Criar um chat",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userId": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "userId",
+                "email"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "Chat criado com sucesso"
+          }
+        }
+      }
+    },
+    "/api/messages": {
+      "post": {
+        "description": "Enviar nova mensagem",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "chatId": {
+                  "type": "string"
+                },
+                "senderId": {
+                  "type": "string"
+                },
+                "content": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "chatId",
+                "senderId",
+                "content"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "Mensagem enviada com sucesso"
+          }
+        }
+      }
+    },
+    "/api/messages/get": {
+      "post": {
+        "description": "Pegar mensagens",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "chatId": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "chatId"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "Mensagens retornadas com sucesso"
+          }
+        }
+      }
+    },
+    "/api/messages": {
+      "delete": {
+        "description": "Apagar mensagem existente",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "messageId": {
+                  "type": "string"
+                },
+                "chatId": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "messageId",
+                "chatId"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "Mensagem apagada com sucesso"
+          }
+        }
+      }
+    },
+    "/api/messages/edit": {
+      "put": {
+        "description": "Editar mensagem existente",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "messageId": {
+                  "type": "string"
+                },
+                "content": {
+                  "type": "string"
+                },
+                "chatId": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "messageId",
+                "content",
+                "chatId"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "Mensagem editada com sucesso"
+          }
+        }
+      }
+    }
+  }
+}

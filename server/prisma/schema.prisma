@@ -1,0 +1,52 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
+model User {
+  id        String         @id @default(uuid())
+  name      String
+  email     String         @unique
+  password  String
+  createdAt DateTime       @default(now())
+  accept    Boolean        @default(false)
+  mailer    String         @unique
+  token     String         @unique @default(uuid())
+  chats     Participants[]
+
+  @@map("user")
+}
+
+model Chat {
+  id           String         @id @default(cuid())
+  messages     Message[]
+  participants Participants[]
+
+  @@map("chat")
+}
+
+model Message {
+  id       Int      @id @default(autoincrement())
+  message  String
+  id_user  String
+  infoDate DateTime @default(now())
+  chatId   String
+  chat     Chat     @relation(fields: [chatId], references: [id])
+
+  @@map("message")
+}
+
+model Participants {
+  userId String
+  chatId String
+  user   User   @relation(fields: [userId], references: [id])
+  chat   Chat   @relation(fields: [chatId], references: [id])
+
+  @@id([userId, chatId])
+  @@map("participants")
+}
