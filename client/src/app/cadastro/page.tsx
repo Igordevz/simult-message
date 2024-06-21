@@ -1,5 +1,4 @@
 "use client";
-
 import {
   Card,
   CardContent,
@@ -10,21 +9,14 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { date, z } from "zod";
+import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useToast } from "@/components/ui/use-toast";
-
-// ajudstar
-import moment from "moment";
-import "moment/locale/pt-br";
-import { baseUrl } from "@/services/api";
+import { contextApi } from "@/context/auth";
 export default function Page() {
-  const [terms, setTerms] = useState(false);
-  const { toast } = useToast();
-
+  const { singIn, setTerms , terms }:any = useContext(contextApi)
   const userSchema = z.object({
     name: z.string().min(2, "Insira uma nome completo"),
     email: z.string().email("insira um email válido"),
@@ -40,41 +32,10 @@ export default function Page() {
   } = useForm<createUserFormData>({
     resolver: zodResolver(userSchema),
   });
-  async function singIn(infoUser: any) {
-    if (!terms) {
-      return toast({
-        title: "Aceite os termos de condições para continuar",
-        description: moment(Date.now()).fromNow(),
-      });
-    }
-    
-    try {
-      const data = await baseUrl.post("/api/users", {
-        name: infoUser?.name,
-        email: infoUser?.email,
-        password: infoUser?.password
-      })
-      
-      if(data?.data){
-        console.log(data)
-      } 
-      return toast({
-        title: "Algo falhou na sua solicitação",
-        description: data?.data.msg,
-      });
-
-    } catch (error:any) {
-      return toast({
-        title: "Algo falhou na sua solicitação",
-        description: error?.response.data?.msg,
-      });
-    }
-
-  }
 
   return (
     <div className="w-full h-screen flex items-center justify-center">
-      <Card className="sm:min-w-[400px]   ">
+      <Card className="sm:min-w-[400px]">
         <CardHeader>
           <CardTitle>Cadastro</CardTitle>
           <CardDescription>

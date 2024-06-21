@@ -29,7 +29,7 @@ export default async function CreateUser(request: Request, response: Response) {
       });
     }
 
-    await prisma.user.create({
+    const data = await prisma.user.create({
       data: {
         name,
         email,
@@ -38,7 +38,7 @@ export default async function CreateUser(request: Request, response: Response) {
       },
     });
 
-    return response.status(201).json({ msg: "usuário criado com sucesso" });
+    return response.status(201).json({ msg: "usuário criado com sucesso", details: data });
   } catch (error) {
     console.log(error);
     return response

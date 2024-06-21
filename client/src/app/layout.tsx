@@ -3,6 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from "@/components/themes-provider";
+import ContextProvider from "@/context/auth";
+import "moment/locale/pt-br";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,8 +27,11 @@ export default function RootLayout({
         enableSystem
         disableTransitionOnChange
       >
+        <ContextProvider>
+
           {children}
           <Toaster />
+        </ContextProvider>
       </ThemeProvider>
         </body>
     </html>
