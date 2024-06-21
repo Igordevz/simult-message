@@ -2,11 +2,11 @@ import express from "express"
 import { router } from "./router/router";
 import { Server } from "socket.io"
 import http from "http"
-import { server } from "typescript";
+import cors from "cors"
 const app = express();
 
 app.use(express.json())
-
+app.use(cors())
 app.use(router)
 
 const serverWeb = http.createServer(app)
