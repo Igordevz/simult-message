@@ -1,6 +1,13 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+<<<<<<< HEAD
+=======
+import { Toaster } from "@/components/ui/toaster";
+import { ThemeProvider } from "@/components/themes-provider";
+import ContextProvider from "@/context/auth";
+import "moment/locale/pt-br";
+>>>>>>> master
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,7 +23,24 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+<<<<<<< HEAD
       <body className={inter.className}>{children}</body>
+=======
+      <body className={inter.className}>
+      <ThemeProvider
+        attribute="class"
+        defaultTheme="dark"
+        enableSystem
+        disableTransitionOnChange
+      >
+        <ContextProvider>
+
+          {children}
+          <Toaster />
+        </ContextProvider>
+      </ThemeProvider>
+        </body>
+>>>>>>> master
     </html>
   );
 }
