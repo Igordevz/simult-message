@@ -18,7 +18,9 @@ export default function ContextProvider({ children }: Children) {
 
   useEffect(() => {
     const user:any = Cookies.get("@auth-token");
-
+    if(user){
+      return false; 
+    }
     async function fetch() {
       const data = await baseUrl.post("/api/users/token", {
         token: JSON.parse(user),
