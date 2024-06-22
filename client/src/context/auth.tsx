@@ -17,10 +17,7 @@ export default function ContextProvider({ children }: Children) {
   const { toast } = useToast();
 
   useEffect(() => {
-    const user:any = Cookies.get("@auth-token");
-    if(user){
-      return false; 
-    }
+    const user: any = Cookies.get("@auth-token");
     async function fetch() {
       const data = await baseUrl.post("/api/users/token", {
         token: JSON.parse(user),
@@ -32,8 +29,9 @@ export default function ContextProvider({ children }: Children) {
         Cookies.remove("@auth-token");
       }
     }
-
-    fetch();
+    if (user) {
+      fetch();
+    }
   }, []);
 
   async function singIn(infoUser: any) {

@@ -63,7 +63,7 @@ export default function Page() {
             <br />
             <Label htmlFor="#password">Coloque sua Senha</Label>
             <Input
-              placeholder="example@gmail.com"
+              placeholder="***********"
               id="password"
               type="password"
               {...register("password")}
