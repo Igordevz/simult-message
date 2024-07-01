@@ -1,13 +1,10 @@
-"use client"
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import Image from "next/image";
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Label } from "@/components/ui/label";
-import { useState } from "react";
+import { Users } from "@/components/details/users";
 export default function Home() {
-  const [ notify, setNotify ] = useState(true)
   return (
     <main className="">
       <aside className="w-[300px] h-full fixed flex flex-col p-4">
@@ -21,22 +18,30 @@ export default function Home() {
             </Button>
           </form>
         </div>
-        <div className="my-10 flex flex-row items-center gap-2 cursor-pointer hover:opacity-55">
-          <Avatar>
-            <AvatarImage src="https://github.com/igordevz.png" />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
-          <div>
-            <h1>Igor Santos</h1>
-            <Label htmlFor="#" className="text-muted-foreground">
-              Sabia que vc é barril dobreado
-            </Label>
-          </div>
-          {notify  ? (
-          <span className="flex h-2 w-2 mb-6 rounded-full bg-sky-500" />
-          ): (
-            <></>
-          )}
+        <div className="flex flex-col gap-4 mt-4">
+          {Users.map((index, _i) => {
+            return (
+              <>
+                <div className=" flex flex-row  gap-2 items-center cursor-pointer hover:opacity-55">
+                  <Avatar>
+                    <AvatarImage src={index.photo_URL} />
+                    <AvatarFallback>{index?.name[0]}</AvatarFallback>
+                  </Avatar>
+                  <div>
+                    <h1>{index?.name}</h1>
+                    <Label htmlFor="#" className="text-muted-foreground">
+                      {index.message}
+                    </Label>
+                  </div>
+                  {index?.view == true ? (
+                    <span className="flex h-2 w-2 mb-6 rounded-full bg-sky-500" />
+                  ) : (
+                    ""
+                  )}
+                </div>
+              </>
+            );
+          })}
         </div>
       </aside>
     </main>
