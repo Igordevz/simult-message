@@ -5,9 +5,16 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Label } from "@/components/ui/label";
 import { Users } from "@/components/details/users";
 export default function Home() {
+  const truncateMessage = (message:any, maxWords:any) => {
+    const words = message.split(' ');
+    if (words.length > maxWords) {
+      return words.slice(0, maxWords).join(' ') + '...';
+    }
+    return message;
+  }
   return (
     <main className="">
-      <aside className="w-[300px] h-full fixed flex flex-col p-4">
+      <aside className="w-[340px] h-full fixed flex flex-col p-4 border-r-[1px]">
         <div>
           <h1 className="mb-2">Mensagens</h1>
           <form className="flex flex-row ">
@@ -19,21 +26,21 @@ export default function Home() {
           </form>
         </div>
         <div className="flex flex-col gap-4 mt-4">
-          {Users.map((index, _i) => {
+          {Users.map((user, _i) => {
             return (
               <>
                 <div className=" flex flex-row  gap-2 items-center cursor-pointer hover:opacity-55">
                   <Avatar>
-                    <AvatarImage src={index.photo_URL} />
-                    <AvatarFallback>{index?.name[0]}</AvatarFallback>
+                    <AvatarImage src={user.photo_URL} />
+                    <AvatarFallback>{user?.name[0]}</AvatarFallback>
                   </Avatar>
                   <div>
-                    <h1>{index?.name}</h1>
+                    <h1>{user?.name}</h1>
                     <Label htmlFor="#" className="text-muted-foreground">
-                      {index.message}
+                    {truncateMessage(user?.message, 5)} {/* Limite de 10 palavras */}
                     </Label>
                   </div>
-                  {index?.view == true ? (
+                  {user?.view == true ? (
                     <span className="flex h-2 w-2 mb-6 rounded-full bg-sky-500" />
                   ) : (
                     ""
