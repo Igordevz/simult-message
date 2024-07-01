@@ -4,6 +4,7 @@ import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Label } from "@/components/ui/label";
 import { Users } from "@/components/details/users";
+import Chat from "@/components/details/chat";
 export default function Home() {
   const truncateMessage = (message:any, maxWords:any) => {
     const words = message.split(' ');
@@ -14,7 +15,7 @@ export default function Home() {
   }
   return (
     <main className="">
-      <aside className="w-[340px] h-full fixed flex flex-col p-4 border-r-[1px]">
+      <aside className="w-[20%] h-full fixed flex flex-col p-4 border-r-[1px]">
         <div>
           <h1 className="mb-2">Mensagens</h1>
           <form className="flex flex-row ">
@@ -37,7 +38,7 @@ export default function Home() {
                   <div>
                     <h1>{user?.name}</h1>
                     <Label htmlFor="#" className="text-muted-foreground">
-                    {truncateMessage(user?.message, 5)} {/* Limite de 10 palavras */}
+                    {truncateMessage(user?.message, 5)} 
                     </Label>
                   </div>
                   {user?.view == true ? (
@@ -51,6 +52,9 @@ export default function Home() {
           })}
         </div>
       </aside>
+      <div className="w-[80%] absolute right-0 h-full">
+          <Chat/>
+      </div>
     </main>
   );
 }
