@@ -16,7 +16,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { contextApi } from "@/context/auth";
 export default function Page() {
-  const { singIn, setTerms , terms }:any = useContext(contextApi)
+  const { singIn, setTerms, terms }: any = useContext(contextApi);
   const userSchema = z.object({
     name: z.string().min(2, "Insira uma nome completo"),
     email: z.string().email("insira um email válido"),
@@ -42,7 +42,7 @@ export default function Page() {
             siga as indicações abaixo, para obter um melhor resultado
           </CardDescription>
         </CardHeader>
-        <CardContent> 
+        <CardContent>
           <form onSubmit={handleSubmit(singIn)}>
             <Label htmlFor="#name">Insira seu Nome Completo</Label>
             <Input
