@@ -29,7 +29,7 @@ export default function Home() {
           {Users.map((user, _i) => {
             return (
               <>
-                <div className=" flex flex-row  gap-2 items-center cursor-pointer hover:opacity-55">
+                <div key={_i} className=" flex flex-row  gap-2 items-center cursor-pointer hover:opacity-55">
                   <Avatar>
                     <AvatarImage src={user.photo_URL} />
                     <AvatarFallback>{user?.name[0]}</AvatarFallback>
