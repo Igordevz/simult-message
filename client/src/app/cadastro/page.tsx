@@ -42,7 +42,7 @@ export default function Page() {
             siga as indicações abaixo, para obter um melhor resultado
           </CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent> 
           <form onSubmit={handleSubmit(singIn)}>
             <Label htmlFor="#name">Insira seu Nome Completo</Label>
             <Input
