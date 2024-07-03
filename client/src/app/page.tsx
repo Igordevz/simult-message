@@ -5,14 +5,15 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Label } from "@/components/ui/label";
 import { Users } from "@/components/details/users";
 import Chat from "@/components/details/chat";
+import { message } from "@/components/details/message";
 export default function Home() {
-  const truncateMessage = (message:any, maxWords:any) => {
-    const words = message.split(' ');
+  const truncateMessage = (message: any, maxWords: any) => {
+    const words = message.split(" ");
     if (words.length > maxWords) {
-      return words.slice(0, maxWords).join(' ') + '...';
+      return words.slice(0, maxWords).join(" ") + "...";
     }
     return message;
-  }
+  };
   return (
     <main className="">
       <aside className="w-[20%] h-full fixed flex flex-col p-4 border-r-[1px]">
@@ -30,7 +31,10 @@ export default function Home() {
           {Users.map((user, _i) => {
             return (
               <>
-                <div key={_i} className=" flex flex-row  gap-2 items-center cursor-pointer hover:opacity-55">
+                <div
+                  key={_i}
+                  className=" flex flex-row  gap-2 items-center cursor-pointer hover:opacity-55"
+                >
                   <Avatar>
                     <AvatarImage src={user.photo_URL} />
                     <AvatarFallback>{user?.name[0]}</AvatarFallback>
@@ -38,7 +42,7 @@ export default function Home() {
                   <div>
                     <h1>{user?.name}</h1>
                     <Label htmlFor="#" className="text-muted-foreground">
-                    {truncateMessage(user?.message, 5)} 
+                      {truncateMessage(user?.message, 5)}
                     </Label>
                   </div>
                   {user?.view == true ? (
@@ -53,7 +57,7 @@ export default function Home() {
         </div>
       </aside>
       <div className="w-[80%] absolute right-0 h-full">
-          <Chat/>
+        <Chat message={message} />
       </div>
     </main>
   );

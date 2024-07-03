@@ -13,6 +13,7 @@ interface Children {
 }
 export default function ContextProvider({ children }: Children) {
   const [terms, setTerms] = useState(false);
+  const [user, setUser] = useState();
   const router = useRouter();
   const { toast } = useToast();
 
@@ -24,7 +25,7 @@ export default function ContextProvider({ children }: Children) {
       });
 
       if (data?.data) {
-        console.log(data.data)
+        setUser(data?.data);
         router.push("/");
       } else {
         Cookies.remove("@auth-token");
@@ -65,30 +66,29 @@ export default function ContextProvider({ children }: Children) {
       });
     }
   }
- async function Login(infoUser: any){
-  try {
-    const data = await baseUrl.post("/login", {
-      email: infoUser?.email,
-      password: infoUser?.password,
-    });
-    if (data?.data) {
-      Cookies.set("@auth-token", JSON.stringify(data?.data?.details));
-      location.reload();
+  async function Login(infoUser: any) {
+    try {
+      const data = await baseUrl.post("/login", {
+        email: infoUser?.email,
+        password: infoUser?.password,
+      });
+      if (data?.data) {
+        Cookies.set("@auth-token", JSON.stringify(data?.data?.details));
+        location.reload();
+      }
+      return toast({
+        title: "Login Autorizado ✅",
+        description: data?.data?.msg,
+      });
+    } catch (error: any) {
+      return toast({
+        title: "Algo falhou na sua solicitação",
+        description: error?.response?.data?.msg,
+      });
     }
-    return toast({
-      title: "Login Autorizado ✅",
-      description: data?.data?.msg,
-    });
-  } catch (error: any) {
-    console.log(error)
-    return toast({
-      title: "Algo falhou na sua solicitação",
-      description: error?.response?.data?.msg,
-    });
   }
- }
   return (
-    <contextApi.Provider value={{ singIn, setTerms, terms, Login }}>
+    <contextApi.Provider value={{ singIn, setTerms, terms, Login, user }}>
       {children}
     </contextApi.Provider>
   );
